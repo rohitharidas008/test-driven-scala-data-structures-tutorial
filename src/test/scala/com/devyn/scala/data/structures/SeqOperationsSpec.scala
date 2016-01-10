@@ -7,7 +7,7 @@ import scala.collection.immutable
 /**
   * Created by devyn on 1/10/16.
   */
-class SeqOperationsTest extends FlatSpec with BeforeAndAfterEach {
+class SeqOperationsSpec extends FlatSpec with BeforeAndAfterEach {
 
   var operations: SeqOperations = _
 
@@ -25,6 +25,75 @@ class SeqOperationsTest extends FlatSpec with BeforeAndAfterEach {
       case s: Seq[_] => {} //quietly succeed
       case _ => fail("result is not a sequence")
     }
+  }
+
+  it should "add the value to the sequence" in {
+    //when
+    val result = operations.appendToASeq(immutable.Seq("some", "values"), "added")
+
+    //then
+    assert(result(0) == "some")
+    assert(result(1) == "values")
+    assert(result(2) == "added")
+    assert(result.size == 3)
+  }
+
+  it should "add the value to an empty sequence" in {
+    //when
+    val result = operations.appendToASeq(immutable.Seq(), "added")
+
+    //then
+    assert(result(0) == "added")
+    assert(result.size == 1)
+  }
+
+  it should "handle the case when null is passed in for the sequence" in {
+    //when
+    val result = operations.appendToASeq(null, "added")
+
+    //then
+    assert(result(0) == "added")
+    assert(result.size == 1)
+  }
+
+  it should "add null values to the sequence if requested" in {
+    //when
+    val result = operations.appendToASeq(immutable.Seq("some", "values"), null)
+
+    //then
+    assert(result(0) == "some")
+    assert(result(1) == "values")
+    assert(result(2) == null)
+    assert(result.size == 3)
+  }
+
+  it should "say false if it does not contain a member" in {
+    //when
+    val result = operations.sequenceContains(immutable.Seq(1, 3, "fred"), "alphalpha")
+
+    //then
+    assert(!result)
+  }
+
+  it should "say true if it does contain a member" in {
+    //when
+    val result = operations.sequenceContains(immutable.Seq(1, 2, "fred"), 2)
+    val result2 = operations.sequenceContains(immutable.Seq(new MyRelationship(1, "name1", "2"),
+      new MyRelationship(1, "name1", "3"),
+      new MyRelationship(2, "name2", "1"),
+      new MyRelationship(3, "name3", "1")), new MyRelationship(1, "name1", "3"))
+
+    //then
+    assert(result)
+    assert(result2)
+  }
+
+  it should "say false if the sequence is null" in {
+    //when
+    val result = operations.sequenceContains(null, "any val")
+
+    //then
+    assert(!result)
   }
 
   it should "sum the numbers in the sequence" in {

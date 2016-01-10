@@ -6,3 +6,4 @@ package com.devyn.scala.data.structures
 
 case class MyFirstClass(id: Long, name: String, otherIds: Seq[String])
 case class MyRelationship(id: Long, name: String, otherId: String)
+class NotACaseClass(val id: Long, val name: String, val otherId: String)

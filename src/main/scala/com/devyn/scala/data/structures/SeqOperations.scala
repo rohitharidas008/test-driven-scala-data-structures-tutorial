@@ -14,6 +14,30 @@ class SeqOperations {
   }
 
   /**
+    * append a value to a sequence and return a new sequence
+    *
+    * @param sequence the base sequence
+    * @param value value to add
+    * @tparam T the type of sequence and value
+    * @return a new sequence with value appended
+    */
+  def appendToASeq[T](sequence: immutable.Seq[T], value: T): immutable.Seq[T] = {
+    //TODO fill me in
+    null
+  }
+
+  /**
+    * should test if the sequence contains the given value
+    * @param sequence - sequence to check
+    * @param value - value to look for
+    * @tparam T - the type of sequence and value
+    * @return whether sequence contains value
+    */
+  def sequenceContains[T](sequence: immutable.Seq[T], value: T): Boolean = {
+    //TODO fill me in
+    false
+  }
+  /**
     *
     * @param values
     * @return the sum of all values in values
