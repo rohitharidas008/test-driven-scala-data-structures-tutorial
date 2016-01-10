@@ -7,6 +7,17 @@ import scala.collection.immutable
   */
 class IteratorOperations {
 
+  def newIteratorFromStringSeq(sequence: immutable.Seq[String]): Iterator[String] = {
+    null
+  }
+
+  def newIteratorFromIntegerSequence(sequence: immutable.Seq[Int]): Iterator[Int] = {
+    null
+  }
+
+  def newIteratorFromMyRelationshipSequence(sequence: immutable.Seq[MyRelationship]): Iterator[MyRelationship] = {
+    null
+  }
   /**
     * get the iterator from a sequence
     * @param sequence

@@ -15,7 +15,89 @@ class IteratorOperationsSpec extends FlatSpec with BeforeAndAfterEach {
     operations = new IteratorOperations()
   }
 
-  it should "create a new iterator from a sequence" in {
+  it should "create a new iterator from a String sequence" in {
+    //when
+    val result = operations.newIteratorFromStringSeq(immutable.Seq("val1", "val2"))
+
+    //then
+    assert(result.next() == "val1")
+    assert(result.next() == "val2")
+    assert(!result.hasNext)
+  }
+
+  it should "handle the case when the String sequence is empty" in {
+    //when
+    val result = operations.newIteratorFromStringSeq(immutable.Seq())
+
+    //then
+    assert(!result.hasNext)
+  }
+
+
+  it should "handle the case when the String sequence is null" in {
+    //when
+    val result = operations.newIteratorFromStringSeq(null)
+
+    //then
+    assert(!result.hasNext)
+  }
+
+  it should "create a new iterator from a Number sequence" in {
+    //when
+    val result = operations.newIteratorFromIntegerSequence(immutable.Seq(1, 2))
+
+    //then
+    assert(result.next() == 1)
+    assert(result.next() == 2)
+    assert(!result.hasNext)
+  }
+
+  it should "handle the case when the Number sequence is empty" in {
+    //when
+    val result = operations.newIteratorFromIntegerSequence(immutable.Seq())
+
+    //then
+    assert(!result.hasNext)
+  }
+
+  it should "handle the case when the Number sequence is null" in {
+    //when
+    val result = operations.newIteratorFromIntegerSequence(null)
+
+    //then
+    assert(!result.hasNext)
+  }
+
+  it should "create a new iterator from a MyRelationship sequence" in {
+    //when
+    val result = operations.newIteratorFromMyRelationshipSequence(
+      immutable.Seq(MyRelationship(1, "name1", "other1"),
+        MyRelationship(2, "name2", "other2")))
+
+    //then
+    assert(result.next() == MyRelationship(1, "name1", "other1"))
+    assert(result.next() == MyRelationship(2, "name2", "other2"))
+    assert(!result.hasNext)
+  }
+
+  it should "handle the case when the MyRelationship sequence is empty" in {
+    //when
+    val result = operations.newIteratorFromMyRelationshipSequence(immutable.Seq())
+
+    //then
+    assert(!result.hasNext)
+  }
+
+
+  it should "handle the case when the MyRelationship sequence is null" in {
+    //when
+    val result = operations.newIteratorFromMyRelationshipSequence(null)
+
+    //then
+    assert(!result.hasNext)
+  }
+
+  it should "create a new iterator from a generic sequence" in {
     //when
     val result = operations.newIteratorFromSeq(immutable.Seq("val1", 2))
 
