@@ -12,7 +12,7 @@ object ClassInstanceOperations {
     * @param id
     * @param name
     * @param otherIds
-    * @return
+    * @return a new instance of MyFirstClass
     */
   def createMyFirstClass(id: Long, name: String, otherIds: Seq[String]): MyFirstClass = {
     null
@@ -116,7 +116,6 @@ object ClassInstanceOperations {
     null
   }
 
-
   /**
     * Do not assume there are multiple ids, but create a sequence of MyFirstClass, grouped by the various ids in MyRelationships
     *
@@ -124,7 +123,8 @@ object ClassInstanceOperations {
     * Assume that otherId will be different for each relationship sharing an id.
     *
     *
-    *
+    * @param myRelationships
+    * @return a map of ids to MyFirstClass
     */
   def transformMyRelationshipToMyFirstClassMap(myRelationships: immutable.Seq[MyRelationship]): Map[Long, MyFirstClass] = {
     null
@@ -136,8 +136,8 @@ object ClassInstanceOperations {
     * Assume that the name will be the same for any relationship sharing an id.
     * Assume that otherId will be different for each relationship sharing an id.
     *
-    *
-    *
+    * @param myRelationships
+    * @return a sequence of MyFirstClass
     */
   def transformMyRelationshipToMyFirstClassSequence(myRelationships: immutable.Seq[MyRelationship]): Seq[MyFirstClass] = {
     null
