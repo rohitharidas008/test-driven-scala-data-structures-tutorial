@@ -1,6 +1,7 @@
 package com.devyn.scala.data.structures
 
 import scala.collection.immutable
+import scala.util.control.Breaks
 
 /**
   * Created by devyn on 1/10/16.
@@ -8,15 +9,42 @@ import scala.collection.immutable
 class IteratorOperations {
 
   def newIteratorFromStringSeq(sequence: immutable.Seq[String]): Iterator[String] = {
-    null
+    var iterator: Iterator[String] = Iterator.empty
+    if (sequence == null) {
+      iterator
+    }
+    else {
+      sequence.foreach { str =>
+        iterator = iterator ++ Seq(str)
+      }
+      iterator
+    }
   }
 
   def newIteratorFromIntegerSequence(sequence: immutable.Seq[Int]): Iterator[Int] = {
-    null
+    var iterator: Iterator[Int] = Iterator.empty
+    if (sequence == null) {
+      iterator
+    }
+    else {
+      sequence.foreach { nmbr =>
+        iterator = iterator ++ Seq(nmbr)
+      }
+      iterator
+    }
   }
 
   def newIteratorFromMyRelationshipSequence(sequence: immutable.Seq[MyRelationship]): Iterator[MyRelationship] = {
-    null
+    var iterator: Iterator[MyRelationship] = Iterator.empty
+    if (sequence == null) {
+      iterator
+    }
+    else {
+      sequence.foreach { mr =>
+        iterator = iterator ++ Seq(mr)
+      }
+      iterator
+    }
   }
   /**
     * get the iterator from a sequence
@@ -25,7 +53,16 @@ class IteratorOperations {
     * @return
     */
   def newIteratorFromSeq[T](sequence: immutable.Seq[T]): Iterator[T] = {
-    null
+    var iterator: Iterator[T] = Iterator.empty
+    if (sequence == null) {
+      iterator
+    }
+    else {
+      sequence.foreach {t =>
+      iterator = iterator ++ Seq(t)
+      }
+      iterator
+    }
   }
 
   /**
@@ -38,7 +75,17 @@ class IteratorOperations {
     * @return a new sequence from this iterator
     */
   def newSeqFromIterator[T](iterator: Iterator[T]): immutable.Seq[T] = {
-    null
+    var sequence: Seq[T] = Seq.empty
+    if(iterator == null)
+      {
+        sequence.to[collection.immutable.Seq]
+      }
+    else {
+      while (iterator.hasNext) {
+        sequence = sequence :+ iterator.next()
+      }
+      sequence.to[collection.immutable.Seq]
+    }
   }
 
   /**
@@ -49,7 +96,15 @@ class IteratorOperations {
     * @return an Option with the value if found, None otherwise
     */
   def findValue[T](iterator: Iterator[T], value: T): Option[T] = {
-    null
+    if(iterator ==  null){
+      None
+    }
+    else if(iterator.contains(value)){
+      Option(value)
+    }
+    else{
+      None
+    }
   }
 
   /**
@@ -65,6 +120,18 @@ class IteratorOperations {
     *
     */
   def findNonCaseClass(iterator: Iterator[NotACaseClass], value: NotACaseClass): Option[NotACaseClass] = {
-    null
+    if (iterator == null){
+      None
+    }
+    else {
+      while (iterator.hasNext) {
+        val result = iterator.next()
+        println(result)
+        if (result.id == value.id && result.name == value.name && result.otherId == value.otherId) {
+          return Option(result)
+        }
+      }
+    }
+    None
   }
 }

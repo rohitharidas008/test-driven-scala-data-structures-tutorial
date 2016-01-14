@@ -109,7 +109,7 @@ class IteratorOperationsSpec extends FlatSpec with BeforeAndAfterEach {
 
   it should "handle the case when the sequence is empty" in {
     //when
-    val result = operations.newIteratorFromSeq(null)
+    val result = operations.newIteratorFromSeq(immutable.Seq())
 
     //then
     assert(!result.hasNext)
@@ -195,7 +195,7 @@ class IteratorOperationsSpec extends FlatSpec with BeforeAndAfterEach {
         assert(value.name == "name2")
         assert(value.otherId == "other2")
       }
-      case _ => fail()
+      case None => fail()
     }
   }
 

@@ -1,6 +1,6 @@
 package com.devyn.scala.data.structures
 
-import scala.collection.immutable
+import scala.collection.{SortedMap, immutable}
 
 class SeqOperations {
 
@@ -10,7 +10,7 @@ class SeqOperations {
     */
   def createAnEmptySeq(): immutable.Seq[_] = {
     //TODO fill me in
-    null
+    immutable.Seq.empty
   }
 
   /**
@@ -23,7 +23,16 @@ class SeqOperations {
     */
   def appendToASeq[T](sequence: immutable.Seq[T], value: T): immutable.Seq[T] = {
     //TODO fill me in
-    null
+    if (sequence == null) {
+      var seq: Seq[T] = Seq.empty
+      seq = seq :+ value
+      seq.to[collection.immutable.Seq]
+    }
+    else {
+      var result = sequence.to[collection.mutable.Seq]
+      result = result :+ value
+      result.to[collection.immutable.Seq]
+    }
   }
 
   /**
@@ -35,7 +44,13 @@ class SeqOperations {
     */
   def sequenceContains[T](sequence: immutable.Seq[T], value: T): Boolean = {
     //TODO fill me in
-    false
+      if(sequence == null)
+        false
+
+      else if(sequence.contains(value))
+        true
+      else
+        false
   }
   /**
     *
@@ -44,7 +59,7 @@ class SeqOperations {
     */
   def sumSeqenceOfIntegers(values: immutable.Seq[Int]) : Int = {
     //TODO
-    0
+    values.sum
   }
 
   /**
@@ -55,7 +70,7 @@ class SeqOperations {
     */
   def concatStrings(values: immutable.Seq[String], delimiter: String): String = {
     //TODO
-    null
+    values.mkString(delimiter)
   }
 
   /**
@@ -70,7 +85,10 @@ class SeqOperations {
     */
   def copyASequence(myRelationships: immutable.Seq[MyRelationship]): immutable.Seq[MyRelationship] = {
     //TODO fill me in
-    null
+    myRelationships.foreach{mr =>
+      myRelationships.map(x => mr)
+    }
+    myRelationships
   }
 
   /**
@@ -81,7 +99,17 @@ class SeqOperations {
     */
   def transformASequence(myRelationships: immutable.Seq[MyRelationship]): immutable.Seq[MyFirstClass] = {
     //TODO fill me in
-    null
+    val groupResult = SortedMap(myRelationships.groupBy(_.id).toSeq:_*)
+    var seq: Seq[MyFirstClass] = Seq.empty
+    var otherids: Seq[String] = Seq.empty
+    groupResult.foreach{case(key,value) =>
+      value.foreach{mr =>
+        otherids = otherids :+ mr.otherId
+      }
+      seq = seq :+ MyFirstClass.apply(key, value.head.name,otherids)
+      otherids = Seq.empty
+    }
+    seq.to[collection.immutable.Seq]
   }
 
   /**
@@ -91,7 +119,7 @@ class SeqOperations {
     */
   def toMapById(myRelationships: immutable.Seq[MyFirstClass]): immutable.Map[Long, MyFirstClass] = {
     //TODO fill me in
-    null
+    Map(myRelationships map{mfc => mfc.id -> mfc}: _* )
   }
 
   /**
@@ -101,16 +129,19 @@ class SeqOperations {
     */
   def toMapOfStringSeqById(myFirstClasses: immutable.Seq[MyFirstClass]): immutable.Map[Long, Seq[String]] = {
     //TODO fill me in
-    null
+    Map(myFirstClasses map{mfc: MyFirstClass => mfc.id -> mfc.otherIds}:  _* )
   }
-  /**
-    * transform to a map of MyFirstClasses by Id
-    * @param myRelationships
-    * @return a map of myFirstClasses, mapped by id
-    */
-  def toRelationshipMapById(myRelationships: immutable.Seq[MyRelationship]): immutable.Map[Long, MyFirstClass] = {
-    //TODO fill me in
-    null
-  }
+//  /**
+//    * transform to a map of MyFirstClasses by Id
+//    * @param myRelationships
+//    * @return a map of myFirstClasses, mapped by id
+//    */
+//  def toRelationshipMapById(myRelationships: immutable.Seq[MyRelationship]): immutable.Map[Long, MyFirstClass] = {
+//    //TODO fill me in
+//    var map: Map[Long, MyFirstClass] = Map.empty
+//    val result = transformASequence(myRelationships)
+//    map = map + (key->result)
+//    map
+//  }
 
 }

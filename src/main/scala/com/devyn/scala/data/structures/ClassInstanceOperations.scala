@@ -1,6 +1,7 @@
 package com.devyn.scala.data.structures
 
 import scala.collection.immutable
+import scala.collection.immutable.SortedMap
 
 /**
   * Created by devyn on 1/10/16.
@@ -15,7 +16,7 @@ object ClassInstanceOperations {
     * @return a new instance of MyFirstClass
     */
   def createMyFirstClass(id: Long, name: String, otherIds: Seq[String]): MyFirstClass = {
-    null
+    MyFirstClass.apply(id, name, otherIds)
   }
 
   /**
@@ -26,7 +27,10 @@ object ClassInstanceOperations {
     * @return true if they are the same
     */
   def compareMyFirstClassEquality(thisOne: MyFirstClass, thatOne: MyFirstClass): Boolean = {
-    null
+    if(thisOne == thatOne)
+      true
+    else
+      false
   }
 
   /**
@@ -38,7 +42,7 @@ object ClassInstanceOperations {
     * @return a new instance of MyRelationship
     */
   def createMyRelationship(id: Long, name: String, otherId: String): MyRelationship = {
-    null
+    MyRelationship.apply(id, name, otherId)
   }
 
   /**
@@ -48,7 +52,11 @@ object ClassInstanceOperations {
     * @return truee if they are the same
     */
   def compareMyRelationshipEquality(thisOne: MyRelationship, thatOne: MyRelationship): Boolean = {
-    null
+    if(thisOne == thatOne)
+      true
+    else
+      false
+
   }
 
   /**
@@ -59,7 +67,8 @@ object ClassInstanceOperations {
     * @return a new instance of NotACaseClass
     */
   def createNotACaseClass(id: Long, name: String, otherId: String): NotACaseClass = {
-    null
+    val ncc: NotACaseClass = new NotACaseClass(id, name, otherId)
+    ncc
   }
 
   /**
@@ -69,7 +78,10 @@ object ClassInstanceOperations {
     * @return true if the have the same values
     */
   def compareNotACaseClassEquality(thisOne: NotACaseClass, thatOne: NotACaseClass): Boolean = {
-    null
+    if(thisOne.id == thatOne.id && thisOne.name == thatOne.name && thisOne.otherId == thatOne.otherId)
+      true
+    else
+      false
   }
 
   /**
@@ -80,7 +92,10 @@ object ClassInstanceOperations {
     * @return true if they have the same memory address
     */
   def compareNotACaseClassObjectInstanceIsSame(thisOne: NotACaseClass, thatOne: NotACaseClass): Boolean = {
-    null
+    if(thisOne.id == thatOne.id)
+      true
+    else
+      false
   }
 
   /**
@@ -93,7 +108,11 @@ object ClassInstanceOperations {
     * @return a Seq
     */
   def transformMyFirstClassToMyRelationship(myFirstClass: MyFirstClass): Seq[MyRelationship] = {
-    null
+    var seq: Seq[MyRelationship] = Seq.empty
+    myFirstClass.otherIds.foreach{ str =>
+        seq = seq :+ MyRelationship.apply(myFirstClass.id, myFirstClass.name, str)
+    }
+    seq
   }
 
   /**
@@ -104,7 +123,7 @@ object ClassInstanceOperations {
     * @return
     */
   def transformMyRelationToMyFirstClass(myRelationship: MyRelationship): MyFirstClass = {
-    null
+    MyFirstClass.apply(myRelationship.id, myRelationship.name, Seq(myRelationship.otherId))
   }
 
   /**
@@ -113,7 +132,11 @@ object ClassInstanceOperations {
     * @return
     */
   def transformMyRelationshipToMyFirstClass(myRelationships: immutable.Seq[MyRelationship]): MyFirstClass = {
-    null
+    var otherids: Seq[String] = Seq.empty
+    myRelationships.foreach{mr =>
+      otherids = otherids :+ mr.otherId
+    }
+    MyFirstClass.apply(myRelationships.head.id, myRelationships.head.name, otherids)
   }
 
   /**
@@ -127,7 +150,13 @@ object ClassInstanceOperations {
     * @return a map of ids to MyFirstClass
     */
   def transformMyRelationshipToMyFirstClassMap(myRelationships: immutable.Seq[MyRelationship]): Map[Long, MyFirstClass] = {
-    null
+    val groupResult = myRelationships.groupBy(_.id)
+    var map: Map[Long, MyFirstClass] = Map.empty
+    groupResult.foreach{case(key,value) =>
+      val result = transformMyRelationshipToMyFirstClass(value)
+      map = map + (key->result)
+    }
+    map
   }
 
   /**
@@ -140,6 +169,13 @@ object ClassInstanceOperations {
     * @return a sequence of MyFirstClass
     */
   def transformMyRelationshipToMyFirstClassSequence(myRelationships: immutable.Seq[MyRelationship]): Seq[MyFirstClass] = {
-    null
+    val groupResult = SortedMap(myRelationships.groupBy(_.id).toSeq:_*)
+    var seq: Seq[MyFirstClass] = Seq.empty
+    groupResult.foreach{case(key, value) =>
+      val result = transformMyRelationshipToMyFirstClass(value)
+      seq = seq :+ result
+    }
+    println(seq)
+    seq
   }
 }
